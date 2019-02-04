@@ -1,0 +1,53 @@
+<div class="row">
+	<app-players
+		class="col-md-8"
+		(addedPlayer) = "onAddedPlayer($event)"
+	></app-players>
+	<div   class="col-md-4" >
+		<div class="row">
+			<div class="col-xs-4 text-center">
+				<div class="lineup_salary_label">Total Salary</div>
+				<div class="lineup_salary_rem">{{lineupService.remSalary}}</div>
+			</div>
+			<div class="col-xs-4 text-center">
+				<div class="lineup_salary_Label">Salary/Player</div>
+				<div class="lineup_salary_rem">{{lineupService.salaryPerPlayer | number:0}}</div>
+			</div>
+			<div class="col-xs-4 text-center">
+				<div class="lineup_points_label">Projected Points</div>
+				<div class="lineup_points_counter">{{lineupService.points}}</div>
+			</div>
+		</div>
+
+		<ul class="lineup__body">
+			<li
+				*ngFor="let player of players"
+				class="lineup__slot"
+				[ngClass]="{'lineup__slot--has-player':player.id}">
+				<div class="lineup__empty-state">
+					<span class="lineup__player-position">{{player.pos}}</span>
+					<span class="lineup__player-empty-text">Add Player</span>
+				</div>
+				<div class="lineup__player-container">
+					<div class="lineup__player">
+						<div class="lineup_player_info">
+							<span class="lineup_player_name">{{player.pos}} {{player.player?.firstName}} {{player.player?.lastName}}</span>
+							<span class="lineup_player_salary">{{player.salary}}</span>
+							<span class="lineup_player_points">{{player.projectedScore}}</span>
+							<span class="player-action">
+								<button class = "player-remove-button"
+								ng-click= "removePlayer(player, false)">
+								<i class="fa fa-minus-circle fa-sm"></i>
+								</button>
+							</span>
+						</div>
+					</div>
+				</div>
+			</li>
+		</ul>
+		<button  [hidden]="lineupService.lineup?.id" [disabled]="lineupService.playerCount.total!=9" (click)="saveOrUpdateLineup()">Save</button>
+		<button  [hidden]="!lineupService.lineup?.id" [disabled]="lineupService.playerCount.total!=9" (click)="saveOrUpdateLineup(lineup)">update</button>
+		<button  (click)="clearLineup(lineup)">New</button>
+	</div>
+
+</div>

@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand navbar-dark bg-primary mb-4">
+  <div class="container">
+    <a routerLink="/" class="navbar-brand">Daily Fantasy App</a>
+    <div>
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/lineups" class="nav-link">Lineups</a>
+        </li>
+        <li class="nav-item" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <a routerLink="/research" class="nav-link">Research</a>
+        </li>
+        <li   class="nav-item " [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+          <i [popover]="myPopover" [popoverCloseOnClickOutside]="false" [popoverCloseOnMouseOutside]="false" class="fa fa-user-circle fa-lg">
+            <popover-content #myPopover>
+                <app-login></app-login>
+            </popover-content>
+          </i>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</nav>

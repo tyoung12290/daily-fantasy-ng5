@@ -1,0 +1,37 @@
+
+	<app-game></app-game>
+	<div class="player_filters">
+				<div class="btn-group btn-group-m">
+				  <button *ngFor="let pos of positions"
+	        type="button"
+					name="posFilter"
+	        value="{{pos}}"
+	        (click)="performFilter(pos, 'posFilter')"
+	        class="btn btn-primary">{{pos}}</button>
+				</div>
+				<div class = "search_players">
+					<input (keyup)="performFilter(search.fuzzy, 'nameFilter')" type="text" placeholder="Search" [(ngModel)]="search.fuzzy" />
+				</div>
+
+	</div>
+
+	<table class="table table-color table-bordered table-hover">
+			<tr *ngFor="let player of filteredPlayers">
+				<td class="col-md-4">{{player.player.pos}} {{player.player.firstName}} {{player.player.lastName}}</td>
+				<td class="col-md-1">{{player.team.abbr}}</td>
+				<td class="col-md-1" ng-class="{neg_salary:p.lineup.remSalary<0}">{{player.salary}}</td>
+				<td class="col-md-1">{{player.projectedScore}}</td>
+				<td class="col-md-1">{{player.pointsPerDollar | number:'1.0-1'}}</td>
+				<td class = "player-add col-md-1">
+					<button class = "player-add-button"
+							*ngIf="!inLineup(player.id)"
+							(click) = "addPlayer(player)">
+						<i class="fa fa-plus-circle fa-sm"></i>
+					</button>
+					<button class = "player-remove-button"
+								*ngIf="inLineup(player.id)">
+						<i class="fa fa-minus-circle fa-sm"></i>
+					</button>
+				</td>
+			</tr>
+	</table>

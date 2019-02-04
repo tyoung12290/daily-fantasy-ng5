@@ -1,0 +1,29 @@
+<div class="card card-body mb-3">
+  <h2>Login</h2>
+    <form #userForm="ngForm" (submit)="login(userForm)">
+      <div class="form-group">
+        <label>username</label>
+        <input
+        [(ngModel)]="user.username"
+        type="text"
+        [ngClass]="{'is-invalid':userUsername.errors && userUsername.touched}"
+        class="form-control"
+        name="username"
+        #userUsername="ngModel"
+        required
+        minlength="2">
+        <div [hidden]="!userUsername.errors?.required" class="invalid-feedback">
+          username required
+        </div>
+        <div [hidden]="!userUsername.errors?.minlength" class="invalid-feedback">
+          Must be at least 2 characters
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input [(ngModel)]="user.password" type="text" class="form-control" name="password">
+      </div>
+      <button [disabled]="!userForm.form.valid"
+      class="btn btn-block mb-3">Login</button>
+    </form>
+</div>
