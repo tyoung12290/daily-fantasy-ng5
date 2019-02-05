@@ -1,3 +1,51 @@
 .search_players{
   float: right;
 }
+
+.table-container {
+    height: 30em;
+    overflow-y: scroll;
+}
+table {
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+    width: 100%;
+}
+table thead {
+    /* head takes the height it requires,
+    and it's not scaled when table is resized */
+    flex: 0 0 auto;
+    width: 100%;
+}
+table tbody {
+    /* body takes all the remaining available space */
+    flex: 1 1 auto;
+    display: block;
+}
+table tbody tr {
+    width: 100%;
+}
+table thead, table tbody tr {
+    display: table;
+    table-layout: fixed;
+}
+
+td:nth-child(1),th:nth-child(1){
+  width:50%
+}
+td:nth-child(2),th:nth-child(2){
+  width:10%
+}
+td:nth-child(3),th:nth-child(3){
+  width:10%
+}
+td:nth-child(4),th:nth-child(4){
+  width:12%
+}
+td:nth-child(5),th:nth-child(5){
+  width:10%
+}
+td:nth-child(6),th:nth-child(6){
+  width:8%
+}

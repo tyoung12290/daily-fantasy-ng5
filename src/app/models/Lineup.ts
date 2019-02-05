@@ -5,6 +5,7 @@ export class Lineup {
   playerDetails: any;
   date: any;
   projectedScore:number;
+  actualScore:number;
   totalSalary:number;
 
 }

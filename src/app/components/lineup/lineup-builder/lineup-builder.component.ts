@@ -20,6 +20,8 @@ export class LineupBuilderComponent implements OnInit {
   constructor(private lineupService: LineupService) { }
 
   ngOnInit() {
+    this.lineupService.lineup=new Lineup
+    this.lineupService.lineup.playerDetails=this.lineupService.players
     this.players=this.lineupService.players;
     this.remSalary=this.lineupService.remSalary;
     this.salaryPerPlayer = this.lineupService.salaryPerPlayer;
@@ -39,9 +41,39 @@ export class LineupBuilderComponent implements OnInit {
       }
     }
   }
+  removePlayer(activePlayer){
+      for (let player of this.lineupService.players){
+        if(activePlayer.id==player.id){
+          let index = this.lineupService.players.indexOf(player);
+              this.lineupService.players[index] = {
+              lineupSlot: this.lineupService.players[index].lineupSlot ,
+              pos :this.lineupService.players[index].pos
+          }
+          this.lineupService.playerCount[player.pos] --;
+          this.lineupService.playerCount.total --;
+          this.lineupService.remSalary=this.lineupService.remSalary + player.salary;
+          this.lineupService.points=this.lineupService.points - player.projectedScore;
+          this.lineupService.salaryPerPlayer=(this.lineupService.playerDiff<=0)? 0:this.lineupService.remSalary/(this.lineupService.playerDiff)
+          break;
+        }
+      }
+    }
+  clearLineup(lineup){
+    for(let player of this.lineupService.players){
+				if(Object.keys(player).length > 2){
+					this.removePlayer(player);
+				}
+
+			}
+      if(lineup.hasOwnProperty('id')){
+        lineup.date='';
+  			lineup.id='';
+      }
+
+  }
 
   saveOrUpdateLineup() {
-    if(this.lineupService.lineup){
+    if(this.lineupService.lineup.hasOwnProperty('id')){
       this.lineupService.updateLineup().subscribe();
     }else{
       let date = new Date();

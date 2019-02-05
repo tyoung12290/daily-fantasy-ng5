@@ -3,3 +3,27 @@
 .col-md-4{
   max-width:100%
 }
+
+.player-add-button{
+	border: none;
+	background-color:transparent;
+	font-family:"fontAwesome";
+	color:#36c565;
+	font-size: 1.5rem;
+	display: flex;
+	margin:auto;
+}
+
+.player-remove-button{
+	border: none;
+	background-color:transparent;
+	font-family:"fontAwesome";
+	color:red;
+	font-size: 1.5rem;
+	display: block;
+	margin:auto;
+}
+
+html {
+  background-color: GhostWhite;
+}

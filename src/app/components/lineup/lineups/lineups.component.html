@@ -1,34 +1,81 @@
-<body>
-	<div class = "col-md-6" >
-		<table class="table table-color table-bordered table-hover">
-		<tr *ngFor="let lineup of lineups">
-			<td *ngFor = "let player of lineup.playerDetails" class="col-md-4">
-				<div>{{player.player.firstName}}</div>
-				<div>{{player.player.lastName}}</div>
-				<div>{{player.salary}}</div>
-				<div>{{player.projectedScore}}</div>
-			</td>
-			<td>
-				<div>{{lineup.totalSalary}}</div>
-				<div>{{lineup.projectedScore}}</div>
-			</td>
-			<td>
-			<div>
-				<button class = "player-remove-button"
-						(click)= "removeLineup(lineup)">
-					<i class="fa fa-minus-circle fa-lg"></i>
-				</button>
+
+	<div class = "row" >
+		<div class="lTable" >
+				<div class="lTableHeading">
+					<div class="lTableHead">
+						Total Salary
+					</div>
+					<div class="lTableHead">
+						Projected Score
+					</div>
+					<div class="lTableHead">
+						Actual Score
+					</div>
+					<div class="lTableHead">
+						Lineup Actions
+					</div>
+				</div>
+			<div class="lTableBody" *ngFor="let lineup of lineups; let i = index">
+				<div class="lTableRow">
+					<div class="lTableCell">
+						<div class="lineup_salary">{{lineup.totalSalary}} {{i}}</div>
+					</div>
+					<div class="lTableCell">
+						<div>{{lineup.projectedScore}}</div>
+					</div>
+					<div class="lTableCell">
+						<div>{{lineup.actualScore}}</div>
+					</div>
+					<div class="lTableCell">
+						<div class='lineup__actions'>
+							<button  routerLink="/" class = "lineup-edit-button"
+									(click)= "passLineupToBuilder(lineup)">
+								<i class="fa fa-edit"></i>
+							</button>
+							<button class = "player-remove-button"
+									(click)= "deleteLineup(lineup)">
+								<i class="fa fa-minus-circle"></i>
+							</button>
+							<button class = "lineup-expand-button"
+									(click)= "rowsControl[i].isCollapsed = !rowsControl[i].isCollapsed"
+								  [attr.aria-expanded]="!rowsControl[i].isCollapsed"
+									aria-controls="'collapse_' + i">
+								<i class="fa fa-plus-circle"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+				<div id="collapse_{{ i }}" [ngbCollapse]="rowsControl[i].isCollapsed">
+				  <div *ngFor="let player of lineup.playerDetails">
+							<div class="lTableRow">
+								<div class="lTableCell">
+									<div class="lineup_salary">{{player.player.firstName}} {{player.player.lastName}}</div>
+								</div>
+								<div class="lTableCell">
+									<div>{{player.projectedScore}}</div>
+								</div>
+								<div class="lTableCell">
+									<div>{{player.actualScore}}</div>
+								</div>
+							</div>
+					</div>
+				</div>
 			</div>
-			</td>
-			<td>
-			<div>
-				<button  routerLink="/" class = "lineup-edit-button"
-						(click)= "passLineupToBuilder(lineup)">
-					<i class="fa fa-edit"></i>
-				</button>
-			</div>
-			</td>
-		</tr>
-	</table>
+		</div>
 	</div>
-</body>
+
+	<!-- <td *ngFor = "let player of lineup.playerDetails" class="col ">
+		<div class="lineup__player_name">{{player.player.firstName}}</div>
+		<div class="lineup__player_name">{{player.player.lastName}}</div>
+		<div class="lineup_salary">{{player.salary}}</div>
+		<div>{{player.projectedScore}}</div>
+		<div>{{player.actualScore}}</div>
+	</td>
+	<td>
+		<div>''</div>
+		<div>''</div>
+		<div class="lineup_salary">{{lineup.totalSalary}}</div>
+		<div>{{lineup.projectedScore}}</div>
+		<div>{{lineup.actualScore}}</div>
+	</td>
+	<td> -->

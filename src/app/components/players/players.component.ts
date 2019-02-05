@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService } from '../../services/player.service'
 import { Player } from '../../models/Player'
+import { LineupService } from '../../services/lineup.service';
 
 @Component({
   selector: 'app-players',
@@ -14,7 +15,7 @@ export class PlayersComponent implements OnInit {
     search = {'pos':'', 'fuzzy':''}
     @Output() addedPlayer = new EventEmitter<Player>();
 
-  constructor(private playerService: PlayerService) { }
+  constructor(private playerService: PlayerService, private lineupService: LineupService) { }
 
   ngOnInit() {
     this.playerService.getPlayers().subscribe(players => {
@@ -36,12 +37,12 @@ export class PlayersComponent implements OnInit {
 
   inLineup(playerId){
     let bool = false;
-    // for (let player of vm.lineup.players){
-    //   if((Object.keys(player).length > 2) && player.id === playerId){
-    //     bool = true;
-    //   }
-    // }
-    // return bool;
+    for (let player of this.lineupService.players){
+      if((Object.keys(player).length > 2) && player.id === playerId){
+        bool = true;
+      }
+    }
+    return bool;
   }
 
   performFilter(value: string,type: string) {

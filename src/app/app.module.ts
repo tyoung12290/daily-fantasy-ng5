@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/Forms'
 import { HttpClientModule } from '@angular/common/http'
 import { PopoverModule } from 'ngx-popover'
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -23,6 +25,7 @@ import { PlayersPipe } from './components/players/players.pipe';
 import { LineupsComponent } from './components/lineup/lineups/lineups.component';
 import { LoginComponent } from './components/login/login.component';
 import { GameComponent } from './components/game/game.component';
+import { LineupDetailsComponent } from './components/lineup/lineup-details/lineup-details.component';
 
 
 
@@ -38,14 +41,17 @@ import { GameComponent } from './components/game/game.component';
     LineupBuilderComponent,
     LineupsComponent,
     LoginComponent,
-    GameComponent
+    GameComponent,
+    LineupDetailsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpClientModule,
     AppRoutingModule,
-    PopoverModule
+    PopoverModule,
+    InfiniteScrollModule,
+    NgbModule
   ],
   providers: [PlayerService, LineupService, LoginService, GameService],
   bootstrap: [AppComponent]

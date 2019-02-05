@@ -70,4 +70,9 @@ export class LineupService {
     const url =`${this.url}/${id}`
     return this.http.get<Lineup>(url)
   }
+
+  deleteLineup(lineup: Lineup):Observable<Lineup>{
+    const url =`${this.url}/${lineup.id}`
+    return this.http.delete<Lineup>(url)
+  }
 }

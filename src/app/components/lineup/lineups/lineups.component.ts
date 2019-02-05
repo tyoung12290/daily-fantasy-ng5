@@ -11,20 +11,30 @@ import { LoginService } from '../../../services/login.service';
 })
 export class LineupsComponent implements OnInit {
   lineups: Lineup[];
+  rowsControl =[];
   constructor(private lineupService: LineupService, private loginService: LoginService) { }
 
   ngOnInit() {
-    this.lineupService.getLineups(1).subscribe(lineups => {
+    this.getLineups(1);
+  }
+
+  getLineups(userId:number){
+    this.lineupService.getLineups(userId).subscribe(lineups => {
       for (let lineup of lineups){
         lineup.projectedScore = 0;
         lineup.totalSalary = 0;
+        lineup.actualScore=0;
         for(let player of lineup.playerDetails){
+          console.log(player)
           lineup.projectedScore += player.projectedScore;
+          lineup.actualScore +=player.actualScore;
           lineup.totalSalary += player.salary;
         }
+        this.rowsControl.push ({
+          isCollapsed:true
+        });
       }
       this.lineups=lineups;
-      console.log(this.lineups)
     })
   }
 
@@ -45,4 +55,10 @@ export class LineupsComponent implements OnInit {
 			}
       this.lineupService.lineup = lineup;
 		}
+    deleteLineup(lineup){
+      this.lineupService.deleteLineup(lineup).subscribe(response=>{
+        this.getLineups(1);
+      });
+
+		};
 }

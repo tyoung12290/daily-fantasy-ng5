@@ -2,7 +2,8 @@
 	width:80px;
 	border: 1px solid grey;
 	border-width:thin;
-    display: table-cell;
+  display: table-cell;
+  background-color: inherit;
 }
 
 .game_team_all{
