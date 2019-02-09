@@ -35,7 +35,9 @@ export class LineupBuilderComponent implements OnInit {
         this.lineupService.playerCount.total ++;
         this.lineupService.remSalary=this.lineupService.remSalary - player.salary
         this.lineupService.points=this.lineupService.points + player.projectedScore;
-        this.lineupService.salaryPerPlayer=(this.lineupService.playerDiff>0)? 0 : this.lineupService.remSalary/this.lineupService.playerDiff;
+        this.lineupService.calcPlayerDiff();
+        console.log(this.lineupService.playerDiff)
+        this.lineupService.salaryPerPlayer=(this.lineupService.playerDiff<=0)? 0 : this.lineupService.remSalary/this.lineupService.playerDiff;
         Object.assign(cur,player);
         break;
       }

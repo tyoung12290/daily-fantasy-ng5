@@ -14,12 +14,9 @@ export class PlayerService {
 
   constructor(private http: HttpClient) { }
 
-  getPlayers() : Observable<Player[]> {
-    let date = new Date();
-    let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
-		                    .toISOString()
-		                    .split("T")[0];
-    let url = `${this.playerUrl}?date=${dateString}`
+  getPlayers(filters) : Observable<Player[]> {
+
+    let url = this.buildFilter(filters)
     return this.http.get<Player[]>(url);
   }
 
@@ -35,5 +32,14 @@ export class PlayerService {
   getplayer(id: number): Observable<Player>{
     const url =`${this.playerUrl}/${id}`
     return this.http.get<Player>(url)
+  }
+
+  buildFilter(filters:any){
+    let queryString = ''
+    Object.keys(filters).forEach(function(key) {
+      queryString += `${key}=${filters[key]}`
+    });
+    console.log(`${this.playerUrl}?${queryString}`)
+      return `${this.playerUrl}?${queryString}`
   }
 }

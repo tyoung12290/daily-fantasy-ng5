@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http'
 import { PopoverModule } from 'ngx-popover'
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ChartistModule } from 'ng-chartist';
 
 import { AppRoutingModule } from './/app-routing.module';
 
@@ -26,6 +27,7 @@ import { LineupsComponent } from './components/lineup/lineups/lineups.component'
 import { LoginComponent } from './components/login/login.component';
 import { GameComponent } from './components/game/game.component';
 import { LineupDetailsComponent } from './components/lineup/lineup-details/lineup-details.component';
+import { PlayerDetailsComponent } from './components/players/player-details/player-details.component';
 
 
 
@@ -42,8 +44,10 @@ import { LineupDetailsComponent } from './components/lineup/lineup-details/lineu
     LineupsComponent,
     LoginComponent,
     GameComponent,
-    LineupDetailsComponent
+    LineupDetailsComponent,
+    PlayerDetailsComponent
   ],
+  entryComponents:[PlayerDetailsComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -51,7 +55,8 @@ import { LineupDetailsComponent } from './components/lineup/lineup-details/lineu
     AppRoutingModule,
     PopoverModule,
     InfiniteScrollModule,
-    NgbModule
+    NgbModule.forRoot(),
+    ChartistModule
   ],
   providers: [PlayerService, LineupService, LoginService, GameService],
   bootstrap: [AppComponent]

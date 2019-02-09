@@ -75,4 +75,8 @@ export class LineupService {
     const url =`${this.url}/${lineup.id}`
     return this.http.delete<Lineup>(url)
   }
+
+  calcPlayerDiff(){
+    this.playerDiff=this.maxPlayerCount.total-this.playerCount.total
+  }
 }

@@ -28,7 +28,7 @@
 		</thead>
 		<tbody infiniteScroll [infiniteScrollDistance]=".1" [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [scrollWindow]="false">
 			<tr *ngFor="let player of filteredPlayers">
-				<td class="col-md-4">{{player.player.pos}} {{player.player.firstName}} {{player.player.lastName}}</td>
+				<td class="col-md-4" (click)="open(player)">{{player.player.pos}} {{player.player.firstName}} {{player.player.lastName}}</td>
 				<td class="col-md-1">{{player.team.abbr}}</td>
 				<td class="col-md-1" ng-class="{neg_salary:p.lineup.remSalary<0}">{{player.salary}}</td>
 				<td class="col-md-1">{{player.projectedScore}}</td>
@@ -46,6 +46,6 @@
 				</td>
 			</tr>
     </tbody>
-
 	</table>
+
 	</div>

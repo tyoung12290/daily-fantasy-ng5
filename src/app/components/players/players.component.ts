@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { PlayerService } from '../../services/player.service'
 import { Player } from '../../models/Player'
 import { LineupService } from '../../services/lineup.service';
+import { PlayerDetailsComponent } from './player-details/player-details.component';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-players',
@@ -15,10 +17,16 @@ export class PlayersComponent implements OnInit {
     search = {'pos':'', 'fuzzy':''}
     @Output() addedPlayer = new EventEmitter<Player>();
 
-  constructor(private playerService: PlayerService, private lineupService: LineupService) { }
+  constructor(private playerService: PlayerService, private lineupService: LineupService, private modalService: NgbModal) { }
 
   ngOnInit() {
-    this.playerService.getPlayers().subscribe(players => {
+    let date = new Date();
+    let dateString = new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+		                    .toISOString()
+		                    .split("T")[0];
+
+    this.playerService.getPlayers({'date':dateString}).subscribe(players => {
+      console.log(players)
       for (let player of players){
         player.pointsPerDollar= player.projectedScore/(player.salary/1000);
       }
@@ -66,16 +74,9 @@ export class PlayersComponent implements OnInit {
       this.addedPlayer.emit(player);
     }
 
-    // performFilter(filterBy: string): IProduct[] {
-    //     filterBy = filterBy.toLocaleLowerCase();
-    //     return this.products.filter((product: IProduct) =>
-    //         Object.keys(product).some(prop => {
-    //             let value = product[prop];
-    //             if (typeof value === "string") {
-    //                 value = value.toLocaleLowerCase();
-    //             }
-    //             return value.toString().indexOf(filterBy) !== -1;
-    //         })
-    //     );
-    // }
+    open(player){
+      const modalRef = this.modalService.open(PlayerDetailsComponent);
+        modalRef.componentInstance.player = player;
+      }
+
 }

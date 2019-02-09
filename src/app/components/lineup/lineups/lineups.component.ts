@@ -11,11 +11,13 @@ import { LoginService } from '../../../services/login.service';
 })
 export class LineupsComponent implements OnInit {
   lineups: Lineup[];
+  sortedLineups: Lineup[];
   rowsControl =[];
   constructor(private lineupService: LineupService, private loginService: LoginService) { }
 
   ngOnInit() {
     this.getLineups(1);
+
   }
 
   getLineups(userId:number){
@@ -30,12 +32,16 @@ export class LineupsComponent implements OnInit {
           lineup.actualScore +=player.actualScore;
           lineup.totalSalary += player.salary;
         }
-        this.rowsControl.push ({
-          isCollapsed:true
-        });
       }
-      this.lineups=lineups;
+      this.lineups=this.sortLineups('-date', lineups);
     })
+  }
+  sortLineups(prop: string, object: any) {
+    object = object.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
+    // asc/desc
+    if (prop.charAt(0) === '-') {
+      object.reverse(); }
+    return object;
   }
 
   passLineupToBuilder(lineup) {
@@ -55,10 +61,11 @@ export class LineupsComponent implements OnInit {
 			}
       this.lineupService.lineup = lineup;
 		}
-    deleteLineup(lineup){
-      this.lineupService.deleteLineup(lineup).subscribe(response=>{
-        this.getLineups(1);
-      });
+  deleteLineup(lineup){
+    this.lineupService.deleteLineup(lineup).subscribe(response=>{
+      this.getLineups(1);
+    });
 
-		};
+	};
+
 }

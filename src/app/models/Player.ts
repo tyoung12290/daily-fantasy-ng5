@@ -1,11 +1,14 @@
-export interface Player {
+import { Game } from "./Game";
 
-  id: number,
-  player: any,
-  team: any,
-  salary:number,
-  actualScore: number,
-  projectedScore: number,
-  date: any,
+export class Player {
+
+  id: number;
+  player: any;
+  team: any;
+  game: Game;
+  salary:number;
+  actualScore: number;
+  projectedScore: number;
+  date: any;
   pointsPerDollar: number
 }

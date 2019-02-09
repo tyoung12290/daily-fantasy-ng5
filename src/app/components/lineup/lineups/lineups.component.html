@@ -1,81 +1,61 @@
 
 	<div class = "row" >
-		<div class="lTable" >
-				<div class="lTableHeading">
-					<div class="lTableHead">
-						Total Salary
-					</div>
-					<div class="lTableHead">
-						Projected Score
-					</div>
-					<div class="lTableHead">
-						Actual Score
-					</div>
-					<div class="lTableHead">
-						Lineup Actions
-					</div>
-				</div>
-			<div class="lTableBody" *ngFor="let lineup of lineups; let i = index">
-				<div class="lTableRow">
-					<div class="lTableCell">
-						<div class="lineup_salary">{{lineup.totalSalary}} {{i}}</div>
-					</div>
-					<div class="lTableCell">
-						<div>{{lineup.projectedScore}}</div>
-					</div>
-					<div class="lTableCell">
-						<div>{{lineup.actualScore}}</div>
-					</div>
-					<div class="lTableCell">
-						<div class='lineup__actions'>
-							<button  routerLink="/" class = "lineup-edit-button"
-									(click)= "passLineupToBuilder(lineup)">
-								<i class="fa fa-edit"></i>
-							</button>
-							<button class = "player-remove-button"
-									(click)= "deleteLineup(lineup)">
-								<i class="fa fa-minus-circle"></i>
-							</button>
-							<button class = "lineup-expand-button"
-									(click)= "rowsControl[i].isCollapsed = !rowsControl[i].isCollapsed"
-								  [attr.aria-expanded]="!rowsControl[i].isCollapsed"
-									aria-controls="'collapse_' + i">
-								<i class="fa fa-plus-circle"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-				<div id="collapse_{{ i }}" [ngbCollapse]="rowsControl[i].isCollapsed">
-				  <div *ngFor="let player of lineup.playerDetails">
-							<div class="lTableRow">
-								<div class="lTableCell">
-									<div class="lineup_salary">{{player.player.firstName}} {{player.player.lastName}}</div>
-								</div>
-								<div class="lTableCell">
-									<div>{{player.projectedScore}}</div>
-								</div>
-								<div class="lTableCell">
-									<div>{{player.actualScore}}</div>
-								</div>
-							</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+		<div class="col-md-6">
 
-	<!-- <td *ngFor = "let player of lineup.playerDetails" class="col ">
-		<div class="lineup__player_name">{{player.player.firstName}}</div>
-		<div class="lineup__player_name">{{player.player.lastName}}</div>
-		<div class="lineup_salary">{{player.salary}}</div>
-		<div>{{player.projectedScore}}</div>
-		<div>{{player.actualScore}}</div>
-	</td>
-	<td>
-		<div>''</div>
-		<div>''</div>
-		<div class="lineup_salary">{{lineup.totalSalary}}</div>
-		<div>{{lineup.projectedScore}}</div>
-		<div>{{lineup.actualScore}}</div>
-	</td>
-	<td> -->
+			<div class="card-group" [attr.id]="'accordion_' + i" *ngFor="let lineup of lineups; let i = index;">
+            <div class="card mb-0" data-toggle="collapse" [attr.data-parent]="'#accordion_' + i" [attr.href]="'#collapseOne_' + i">
+                    <h2 class="card-title mb-0">
+											<div class="card lineup__info">
+										    <div class="card-body">
+										      <h6 class="card-title">Salary</h6>
+										      <p class="card-text">{{lineup.totalSalary}}</p>
+										    </div>
+										  </div>
+										  <div class="card lineup__info">
+										    <div class="card-body">
+										      <h6 class="card-title">Proj Score</h6>
+										      <p class="card-text">{{lineup.projectedScore}}</p>
+										    </div>
+										  </div>
+										  <div class="card lineup__info">
+										    <div class="card-body">
+										      <h6 class="card-title">Act Score</h6>
+										      <p class="card-text">{{lineup.actualScore}}</p>
+										    </div>
+										  </div>
+											<div class="card lineup__info">
+										    <div class="card-body">
+										      <h6 class="card-title">Actions</h6>
+													<button  routerLink="/" class = "lineup-edit-button"
+															(click)= "passLineupToBuilder(lineup)">
+														<i class="fa fa-edit"></i>
+													</button>
+													<button class = "player-remove-button"
+															(click)= "deleteLineup(lineup)">
+														<i class="fa fa-minus-circle"></i>
+													</button>
+										    </div>
+										  </div>
+
+                    </h2>
+                <div [attr.id]="'collapseOne_' + i" class="card-collapse collapse in">
+                    <div class="card-body">
+											<div class="table-container">
+												<table class="table table-color table-bordered table-hover">
+													<tbody>
+														<tr *ngFor="let player of lineup.playerDetails">
+															<td>{{player.player.pos}}</td>
+															<td>{{player.player?.firstName}} {{player.player?.lastName}}</td>
+															<td>{{player.salary}}</td>
+															<td class>{{player.projectedScore}}</td>
+															<td class>{{player.actualScore}}</td>
+														</tr>
+											    </tbody>
+												</table>
+											</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
+</div>
