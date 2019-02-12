@@ -7,7 +7,6 @@ export class LoginService {
   constructor() { }
 
 login(user){
-    console.log(user)
     this.user = user;
   }
 

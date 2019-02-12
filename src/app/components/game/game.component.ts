@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { GameService } from '../../services/game.service'
 import { Game } from '../../models/Game'
 
@@ -10,6 +10,7 @@ import { Game } from '../../models/Game'
 export class GameComponent implements OnInit {
 
   games:Game[];
+  @Output() gameFilterSelect = new EventEmitter<Object>();
   constructor(private gameService: GameService) { }
 
   ngOnInit() {
@@ -18,4 +19,8 @@ export class GameComponent implements OnInit {
   })
   }
 
+  gameFilter(game: any){
+    console.log(game)
+    this.gameFilterSelect.emit(game);
+  }
 }

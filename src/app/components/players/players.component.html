@@ -1,5 +1,7 @@
 
-	<app-game></app-game>
+	<app-game
+		(gameFilterSelect) = "onGameFilter($event)"
+	></app-game>
 	<div class="player_filters">
 				<div class="btn-group btn-group-m">
 				  <button *ngFor="let pos of positions"

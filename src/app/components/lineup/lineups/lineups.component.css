@@ -19,7 +19,16 @@
   border: none;
 	background-color:transparent;
 	font-family:"fontAwesome";
-	font-size: 1.5rem;
-	display: block;
+	font-size: 1rem;
 	margin:auto;
+  display:inline-block;
+}
+
+.player-remove-button{
+  border: none;
+	background-color:transparent;
+	font-family:"fontAwesome";
+	font-size: 1rem;
+	margin:auto;
+  display: inline-block;
 }

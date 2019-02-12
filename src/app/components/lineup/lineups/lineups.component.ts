@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from "@angular/router";
 
 import { LineupService } from '../../../services/lineup.service'
 import { Lineup } from '../../../models/Lineup'
@@ -10,38 +11,40 @@ import { LoginService } from '../../../services/login.service';
   styleUrls: ['./lineups.component.css']
 })
 export class LineupsComponent implements OnInit {
+  lineupType: String;
   lineups: Lineup[];
   sortedLineups: Lineup[];
   rowsControl =[];
-  constructor(private lineupService: LineupService, private loginService: LoginService) { }
+  constructor(
+    private lineupService: LineupService,
+    private loginService: LoginService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.getLineups(1);
+    this.route.paramMap.subscribe(params => {
+      if(params.get("lineupType") === 'optimized'){
+        this.getOptimizedLineups();
+      }else {
+          this.getLineups(1);
+      }
+  })
+
+
 
   }
 
   getLineups(userId:number){
     this.lineupService.getLineups(userId).subscribe(lineups => {
-      for (let lineup of lineups){
-        lineup.projectedScore = 0;
-        lineup.totalSalary = 0;
-        lineup.actualScore=0;
-        for(let player of lineup.playerDetails){
-          console.log(player)
-          lineup.projectedScore += player.projectedScore;
-          lineup.actualScore +=player.actualScore;
-          lineup.totalSalary += player.salary;
-        }
-      }
-      this.lineups=this.sortLineups('-date', lineups);
+      this.lineupService.formatLineups(lineups)
+      this.lineups=this.lineupService.sortLineups('-date', lineups);
     })
   }
-  sortLineups(prop: string, object: any) {
-    object = object.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
-    // asc/desc
-    if (prop.charAt(0) === '-') {
-      object.reverse(); }
-    return object;
+
+  getOptimizedLineups(){
+    this.lineupService.getOptimizedLineups(1).subscribe(lineups => {
+      this.lineupService.formatLineups(lineups)
+      this.lineups=this.lineupService.sortLineups('projectedScore', lineups).reverse();
+    })
   }
 
   passLineupToBuilder(lineup) {

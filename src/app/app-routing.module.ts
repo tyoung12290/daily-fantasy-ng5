@@ -11,7 +11,7 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {path: 'players', component: PlayersComponent},
   {path: 'lineup-builder', component: LineupBuilderComponent},
-  {path: 'lineups', component: LineupsComponent},
+  {path: 'lineups/:lineupType', component: LineupsComponent},
   {path: '**', component: NotFoundComponent}
 ];
 

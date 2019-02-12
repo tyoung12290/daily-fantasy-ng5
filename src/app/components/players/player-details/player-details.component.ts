@@ -3,7 +3,7 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { PlayerService } from '../../../services/player.service';
 import {ILineChartOptions,IChartistAnimationOptions,IChartistData, Chartist} from 'chartist';
 import { ChartEvent, ChartType } from 'ng-chartist';
-import { Legend } from 'chartist-plugin-legend/chartist-plugin-legend.js';
+//import { Legend } from 'chartist-plugin-legend/chartist-plugin-legend.js';
 
 
 @Component({
@@ -57,7 +57,11 @@ export class PlayerDetailsComponent implements OnInit {
       players = players.filter(player =>
         player.actualScore >0)
       this.setData(players)
+      players.forEach(player=>{
+        player.scoreDiff = player.projectedScore-player.actualScore;
+      })
       this.playerDetails = players
+
       this.data = {
         labels: (this.labels),
         series: this.series

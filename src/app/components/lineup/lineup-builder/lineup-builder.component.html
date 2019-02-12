@@ -40,4 +40,5 @@
 			<button  [hidden]="lineupService.lineup?.id" [disabled]="lineupService.playerCount.total!=9" (click)="saveOrUpdateLineup()">Save</button>
 			<button  [hidden]="!lineupService.lineup?.id" [disabled]="lineupService.playerCount.total!=9" (click)="saveOrUpdateLineup(lineupService.lineup)">update</button>
 			<button  (click)="clearLineup(lineupService.lineup)">New</button>
+			<button  [hidden]="lineupService.lineup?.id"  (click)="getOptimizedLineups(1)">Optimize</button>
 </div>

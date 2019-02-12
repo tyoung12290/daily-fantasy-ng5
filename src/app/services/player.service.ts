@@ -39,7 +39,6 @@ export class PlayerService {
     Object.keys(filters).forEach(function(key) {
       queryString += `${key}=${filters[key]}`
     });
-    console.log(`${this.playerUrl}?${queryString}`)
       return `${this.playerUrl}?${queryString}`
   }
 }

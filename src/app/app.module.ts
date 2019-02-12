@@ -28,6 +28,7 @@ import { LoginComponent } from './components/login/login.component';
 import { GameComponent } from './components/game/game.component';
 import { LineupDetailsComponent } from './components/lineup/lineup-details/lineup-details.component';
 import { PlayerDetailsComponent } from './components/players/player-details/player-details.component';
+import { LineupResultChartComponent } from './components/lineup/lineup-result-chart/lineup-result-chart.component';
 
 
 
@@ -45,7 +46,8 @@ import { PlayerDetailsComponent } from './components/players/player-details/play
     LoginComponent,
     GameComponent,
     LineupDetailsComponent,
-    PlayerDetailsComponent
+    PlayerDetailsComponent,
+    LineupResultChartComponent
   ],
   entryComponents:[PlayerDetailsComponent],
   imports: [

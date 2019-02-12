@@ -11,10 +11,11 @@ import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
+  //access modifiers
     players: Player[];
     filteredPlayers: Player[];
     positions=['PG','SG','SF','PF','C','All']
-    search = {'pos':'', 'fuzzy':''}
+    search = {'pos':'', 'fuzzy':'', 'game':''}
     @Output() addedPlayer = new EventEmitter<Player>();
 
   constructor(private playerService: PlayerService, private lineupService: LineupService, private modalService: NgbModal) { }
@@ -26,7 +27,6 @@ export class PlayersComponent implements OnInit {
 		                    .split("T")[0];
 
     this.playerService.getPlayers({'date':dateString}).subscribe(players => {
-      console.log(players)
       for (let player of players){
         player.pointsPerDollar= player.projectedScore/(player.salary/1000);
       }
@@ -53,8 +53,11 @@ export class PlayersComponent implements OnInit {
     return bool;
   }
 
+  onGameFilter(game: any){
+    this.filteredPlayers = this.players.filter(player => player.team.abbr == game.away.team.abbr || player.team.abbr == game.home.team.abbr)
+      console.log(this.filteredPlayers)
+    }
   performFilter(value: string,type: string) {
-    console.log(type)
     if(type === 'posFilter'){
       this.search.pos = value=="All"? this.search.pos = '' : value
       this.filteredPlayers=  this.players.filter(player => player.player.pos.indexOf(this.search.pos) !== -1)
@@ -65,12 +68,10 @@ export class PlayersComponent implements OnInit {
         player.player.firstName.toLowerCase().includes(this.search.fuzzy.toLowerCase()) ||
         player.player.lastName.toLowerCase().includes(this.search.fuzzy.toLowerCase()))
     }
-
     }
 
 
     addPlayer(player: Player){
-      console.log(player)
       this.addedPlayer.emit(player);
     }
 

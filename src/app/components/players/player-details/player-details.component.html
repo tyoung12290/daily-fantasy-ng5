@@ -15,11 +15,15 @@
     ></x-chartist>
     <ul>
       <li class="player-recent-perfomances__stat" *ngFor = "let playerRecord of playerDetails">
-        <div class="player-recent-performance__left">
+        <div class="player-recent-performance__act">
           <div>{{playerRecord.actualScore}} FP</div>
           <div class="recentPerformaceDate">{{playerRecord.date | date : 'MM/dd' }}</div>
         </div>
-        <div class="player-recent-performance__right">
+        <div class="player-recent-performance__proj">
+          <div>{{playerRecord.projectedScore}} FP</div>
+          <div class="scoreDiff" [ngClass]="{posDiff : playerRecord.scoreDiff >=0}">{{ playerRecord.scoreDiff }}</div>
+        </div>
+        <div class="player-recent-performance__match">
           <span class = "awayTeam">Away</span>
         </div>
       </li>

@@ -15,6 +15,7 @@ export class LineupService {
   salaryPerPlayer:number = this.remSalary/9;
   points:number = 0;
   lineup:Lineup;
+  lineups: Lineup[];
   players:any =[
     {lineupSlot:1, pos:'PG'},
     {lineupSlot:2, pos:'PG'},
@@ -50,13 +51,41 @@ export class LineupService {
 
   constructor(private http: HttpClient) { }
 
+
   getLineups(id:number) : Observable<Lineup[]> {
     const url =`${this.url}?userId=${id}`
     return this.http.get<Lineup[]>(url);
   }
 
+  getOptimizedLineups(numOfLineups:number) : Observable<Lineup[]> {
+    const url =`${this.url}/optimized`
+    console.log(url)
+    return this.http.get<Lineup[]>(url);
+  }
+  formatLineups(lineups){
+    lineups.forEach(lineup => {
+        lineup.projectedScore = 0;
+        lineup.totalSalary = 0;
+        lineup.actualScore=0;
+        lineup.scoreDiff=0;
+        for(let player of lineup.playerDetails){
+          lineup.projectedScore += player.projectedScore;
+          lineup.actualScore +=player.actualScore;
+          lineup.totalSalary += player.salary;
+        }
+        lineup.scoreDiff = lineup.projectedScore - lineup.actualScore
+      })
+      this.lineups=this.sortLineups('-date', lineups);
+    }
+  sortLineups(prop: string, object: any) {
+    object = object.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
+    // asc/desc
+    if (prop.charAt(0) === '-') {
+      object.reverse(); }
+    return object;
+  }
+
   saveLineup(): Observable<Lineup>{
-    console.log(this.lineup)
     this.http.post<Lineup>(this.url, this.lineup, httpOptions)
     return this.http.post<Lineup>(this.url, this.lineup, httpOptions)
   }

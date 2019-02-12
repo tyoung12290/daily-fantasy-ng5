@@ -3,7 +3,7 @@
   	<div class="game_container" (click)="getVal('ALL')">
   			<div class="game_teams">ALL</div>
   	</div>
-  	<div class="game_container" *ngFor="let game of games" (click)="getVal(game)">
+  	<div class="game_container" *ngFor="let game of games" (click)="gameFilter(game)">
   		<div class="game_teams">{{game.away.team.abbr}}@{{game.home.team.abbr}}</div>
   		<div class="game_time">{{game.time | date:'HH:mm'}}</div>
   	</div>

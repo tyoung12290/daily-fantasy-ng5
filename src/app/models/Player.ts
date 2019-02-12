@@ -11,4 +11,5 @@ export class Player {
   projectedScore: number;
   date: any;
   pointsPerDollar: number
+  scoreDiff: number
 }
